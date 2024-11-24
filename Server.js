@@ -1,6 +1,8 @@
 ﻿const express = require('express');
 const http = require('http');
+const { hostname } = require('os');
 const WebSocket = require('ws');
+const fs = require("node:fs");
 
 const port = 6969;
 const server = http.createServer(express);
@@ -282,8 +284,11 @@ setTimeout(function() {
   ruby_timer = ruby_time_between_calls * parseInt(emerald_number_of_balls)
 }, ruby_initial_pause * 1000)
 
+serverdata = `wss://${hostname}-6969.csb.app`
+
 server.listen(port, function() {
-  console.log(`Server is listening on ${port}!`)
+  console.log(`wss://${hostname}-6969.csb.app / Server is listening on ${port}!`)
+  fs.writeFile("ServerIP.txt",`wss://${hostname}-6969.csb.app`,function(){});
 })
 
 wss.on('connection', function connection(ws) {
