@@ -288,7 +288,7 @@ serverdata = `wss://${hostname}-6969.csb.app`
 
 server.listen(port, function() {
   console.log(`wss://${hostname}-6969.csb.app / Server is listening on ${port}!`)
-  fs.writeFile("ServerIP.txt",`wss://${hostname}-6969.csb.app`,function(){});
+  fs.writeFile("ServerIP.txt",`https://${hostname}-6969.csb.app`,function(){});
 })
 
 wss.on('connection', function connection(ws) {
