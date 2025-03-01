@@ -6,7 +6,10 @@
   "tasks": {
     "npm start": {
       "name": "npm start",
-      "command": "npm start"
+      "command": "npm start",
+      "preview": {
+        "port": 6969
+      }
     }
   }
 }

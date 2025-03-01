@@ -25,6 +25,7 @@ var emerald_time_between_rounds = 30 //(seconds)
 var emerald_time_between_bingos = 10 //(seconds)
 var emerald_initial_pause = 60 //(seconds)
 var emerald_timer = 60 //(seconds)
+var emerald_debug = true
 
 //SAPPHIRE BINGO VARS
 var sapphire_pause_calling = 0
@@ -41,6 +42,7 @@ var sapphire_time_between_rounds = 30 //(seconds)
 var sapphire_time_between_bingos = 10 //(seconds)
 var sapphire_initial_pause = 120 //(seconds)
 var sapphire_timer = 120 //(seconds)
+var sapphire_debug = false 
 
 //RUBY BINGO VARS
 var ruby_pause_calling = 0
@@ -57,7 +59,7 @@ var ruby_time_between_rounds = 30 //(seconds)
 var ruby_time_between_bingos = 10 //(seconds)
 var ruby_initial_pause = 30 //(seconds)
 var ruby_timer = 30 //(seconds)
-
+var ruby_debug = false
 
 //SERVER STATS VARS
 var total_number_of_players = 0;
@@ -142,7 +144,9 @@ setTimeout(function() {
       else {
         let number_called = emerald_bingo_numbers.pop();
         emerald_bingo_numbers_called.push("|" + number_called)
-        console.log('EMERALD server called number: ' + number_called)
+        if(emerald_debug){
+          console.log('EMERALD server called number: ' + number_called)
+        }
         wss.clients.forEach(client => client.send('FROM`HOST`TO`ALL`ROOMID`EMERALD`SEND-CLIENT-BINGONUMBER`Message`' + number_called.toString()));
       }
     }
@@ -150,7 +154,9 @@ setTimeout(function() {
       emerald_game_has_ended = 1
       emerald_game_has_started = 0
       emerald_players_names = []
-      console.log("EMERALD server restarted")
+      if(emerald_debug){
+        console.log("EMERALD server restarted")
+      }
       wss.clients.forEach(client => client.send('FROM`HOST`TO`ALL`ROOMID`EMERALD`SEND-CLIENT-RESTART`Message`'));
       emerald_timer = emerald_time_between_rounds
       setTimeout(function() {
@@ -197,7 +203,9 @@ setTimeout(function() {
       else {
         let number_called = sapphire_bingo_numbers.pop();
         sapphire_bingo_numbers_called.push("|" + number_called)
-        console.log('SAPPHIRE server called number: ' + number_called)
+        if(sapphire_debug){
+          console.log('SAPPHIRE server called number: ' + number_called)
+        }
         wss.clients.forEach(client => client.send('FROM`HOST`TO`ALL`ROOMID`SAPPHIRE`SEND-CLIENT-BINGONUMBER`Message`' + number_called.toString()));
       }
     }
@@ -205,7 +213,9 @@ setTimeout(function() {
       sapphire_game_has_ended = 1
       sapphire_game_has_started = 0
       sapphire_players_names = []
-      console.log("SAPPHIRE server restarted")
+      if(sapphire_debug){
+        console.log("SAPPHIRE server restarted")
+      }
       wss.clients.forEach(client => client.send('FROM`HOST`TO`ALL`ROOMID`SAPPHIRE`SEND-CLIENT-RESTART`Message`'));
       sapphire_timer = sapphire_time_between_rounds
       setTimeout(function() {
@@ -252,7 +262,9 @@ setTimeout(function() {
       else {
         let number_called = ruby_bingo_numbers.pop();
         ruby_bingo_numbers_called.push("|" + number_called)
-        console.log('RUBY server called number: ' + number_called)
+        if(ruby_debug){
+          console.log('RUBY server called number: ' + number_called)
+        }
         wss.clients.forEach(client => client.send('FROM`HOST`TO`ALL`ROOMID`RUBY`SEND-CLIENT-BINGONUMBER`Message`' + number_called.toString()));
       }
     }
@@ -260,7 +272,9 @@ setTimeout(function() {
       ruby_game_has_ended = 1
       ruby_game_has_started = 0
       ruby_players_names = []
-      console.log("RUBY server restarted")
+      if(ruby_debug){
+        console.log("RUBY server restarted")
+      }
       wss.clients.forEach(client => client.send('FROM`HOST`TO`ALL`ROOMID`RUBY`SEND-CLIENT-RESTART`Message`'));
       ruby_timer = ruby_time_between_rounds
       setTimeout(function() {
@@ -317,6 +331,7 @@ wss.on('connection', function connection(ws) {
       if (emerald_players == -1) {
         emerald_players_names.push(myArray2[0].replace('`', ''))
       }
+      console.log(emerald_players_names)
     }
     if (data.search("ROOMID`EMERALD`") != -1 && data.search("SEND-HOST-CHECKALLROOMS") != -1) {
       let myArray = data.split("FROM`");
@@ -334,7 +349,7 @@ wss.on('connection', function connection(ws) {
       let myArray2 = myArray[1].split("TO`");
       console.log(myArray2[0].replace('`', '') + " left the EMERALD server.");
       var emerald_players = emerald_players_names.indexOf(myArray2[0].replace('`', ''));
-      emerald_players_names.splice(emerald_players, 1)
+      //emerald_players_names.splice(emerald_players, 1)
     }
     if (data.search("ROOMID`EMERALD`") != -1 && data.search("SEND-HOST-RELAYCHATBOXTEXT") != -1) {
       get_message_sent = "EMERALD_HOSTRELAYCHATBOXTEXT"
