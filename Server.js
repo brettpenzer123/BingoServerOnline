@@ -320,17 +320,18 @@ wss.on('connection', function connection(ws) {
       let myArray = data.split("FROM`");
       let myArray2 = myArray[1].split("TO`");
       let newarray = 'FROM`HOST`TO`' + myArray2[0].replace('`', '') + '`ROOMID`SERVER`SEND-CLIENT-SERVERINFORMATION`Message`EMERALD:' + emerald_players_names.length + ';' + emerald_game_type + ';' + emerald_number_of_balls + ';' + emerald_timer + ';' + ':SAPPHIRE:' + sapphire_players_names.length + ';' + sapphire_game_type + ';' + sapphire_number_of_balls + ';' + sapphire_timer + ';' + ':RUBY:' + ruby_players_names.length + ';' + ruby_game_type + ';' + ruby_number_of_balls + ';' + ruby_timer + ';'
+      console.log(emerald_players_names)
       ws.send(newarray);
     }
     //EMERALD SERVER CODE
     if (data.search("ROOMID`EMERALD`") != -1 && data.search("SEND-PING") != -1) {
       let myArray = data.split("FROM`");
       let myArray2 = myArray[1].split("TO`");
-      console.log(myArray2[0].replace('`', ''))
-      var emerald_players = emerald_players_names.indexOf(myArray2[0].replace('`', ''))
-      if (emerald_players == -1) {
-        emerald_players_names.push(myArray2[0].replace('`', ''))
-      }
+      //console.log(myArray2[0].replace('`', ''))
+      //var emerald_players = emerald_players_names.indexOf(myArray2[0].replace('`', ''))
+      //if (emerald_players == -1) {
+      //  emerald_players_names.push(myArray2[0].replace('`', ''))
+      //}
       console.log(emerald_players_names)
     }
     if (data.search("ROOMID`EMERALD`") != -1 && data.search("SEND-HOST-CHECKALLROOMS") != -1) {
@@ -349,7 +350,9 @@ wss.on('connection', function connection(ws) {
       let myArray2 = myArray[1].split("TO`");
       console.log(myArray2[0].replace('`', '') + " left the EMERALD server.");
       var emerald_players = emerald_players_names.indexOf(myArray2[0].replace('`', ''));
-      //emerald_players_names.splice(emerald_players, 1)
+      if (emerald_players != -1) {
+        emerald_players_names.splice(emerald_players,1)
+      }
     }
     if (data.search("ROOMID`EMERALD`") != -1 && data.search("SEND-HOST-RELAYCHATBOXTEXT") != -1) {
       get_message_sent = "EMERALD_HOSTRELAYCHATBOXTEXT"
