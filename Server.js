@@ -315,8 +315,10 @@ wss.on('connection', function connection(ws) {
   });
   ws.on('message', function incoming(data) {
     var get_message_sent = ""
+    var got_command = false
     //MAIN SERVER CODE
     if (data.search("ROOMID`SERVER`") != -1 && data.search("SEND-HOST-GETINFORMATION") != -1) {
+      got_command = true
       let myArray = data.split("FROM`");
       let myArray2 = myArray[1].split("TO`");
       let newarray = 'FROM`HOST`TO`' + myArray2[0].replace('`', '') + '`ROOMID`SERVER`SEND-CLIENT-SERVERINFORMATION`Message`EMERALD:' + emerald_players_names.length + ';' + emerald_game_type + ';' + emerald_number_of_balls + ';' + emerald_timer + ';' + ':SAPPHIRE:' + sapphire_players_names.length + ';' + sapphire_game_type + ';' + sapphire_number_of_balls + ';' + sapphire_timer + ';' + ':RUBY:' + ruby_players_names.length + ';' + ruby_game_type + ';' + ruby_number_of_balls + ';' + ruby_timer + ';'
@@ -325,6 +327,7 @@ wss.on('connection', function connection(ws) {
     }
     //EMERALD SERVER CODE
     if (data.search("ROOMID`EMERALD`") != -1 && data.search("SEND-PING") != -1) {
+      got_command = true
       let myArray = data.split("FROM`");
       let myArray2 = myArray[1].split("TO`");
       //console.log(myArray2[0].replace('`', ''))
@@ -335,6 +338,7 @@ wss.on('connection', function connection(ws) {
       console.log(emerald_players_names)
     }
     if (data.search("ROOMID`EMERALD`") != -1 && data.search("SEND-HOST-CHECKALLROOMS") != -1) {
+      got_command = true
       let myArray = data.split("FROM`");
       let myArray2 = myArray[1].split("TO`");
       let newarray = 'FROM`HOST`TO`' + myArray2[0].replace('`', '') + '`ROOMID`EMERALD`SEND-ROOM-LOBBY-EXISTS`Message`'
@@ -346,6 +350,7 @@ wss.on('connection', function connection(ws) {
       ws.send(newarray);
     }
     if (data.search("ROOMID`EMERALD`") != -1 && data.search("SEND-HOST-LEAVE") != -1) {
+      got_command = true
       let myArray = data.split("FROM`");
       let myArray2 = myArray[1].split("TO`");
       console.log(myArray2[0].replace('`', '') + " left the EMERALD server.");
@@ -355,9 +360,11 @@ wss.on('connection', function connection(ws) {
       }
     }
     if (data.search("ROOMID`EMERALD`") != -1 && data.search("SEND-HOST-RELAYCHATBOXTEXT") != -1) {
+      got_command = true
       get_message_sent = "EMERALD_HOSTRELAYCHATBOXTEXT"
     }
     if (data.search("ROOMID`EMERALD`") != -1 && data.search("SEND-HOST-NEEDALLBINGONUMBERS") != -1) {
+      got_command = true
       //console.log('FROM`My`TO`HOST`ROOMID`EMERALD`SEND-ROOM-LOBBY-EXISTS`Message`')
       let myArray = data.split("FROM`");
       let myArray2 = myArray[1].split("TO`");
@@ -366,11 +373,13 @@ wss.on('connection', function connection(ws) {
       ws.send(newarray);
     }
     if (data.search("ROOMID`EMERALD`") != -1 && data.search("SEND-HOST-PLAYERBINGO") != -1) {
+      got_command = true
       get_message_sent = "EMERALD_PLAYERBINGO"
     }
     wss.clients.forEach(function each(client) {
       if (client.readyState === WebSocket.OPEN) {
         if (get_message_sent == "EMERALD_HOSTRELAYCHATBOXTEXT") {
+          got_command = true
           //console.log('FROM`My`TO`HOST`ROOMID`EMERALD`SEND-ROOM-LOBBY-EXISTS`Message`')
           let myArray = data.split("FROM`");
           let myArray2 = myArray[1].split("TO`");
@@ -379,6 +388,7 @@ wss.on('connection', function connection(ws) {
           client.send(newarray);
         }
         if (get_message_sent == "EMERALD_PLAYERBINGO") {
+          got_command = true
           //console.log('FROM`My`TO`HOST`ROOMID`EMERALD`SEND-ROOM-LOBBY-EXISTS`Message`')
           let myArray = data.split("FROM`");
           let myArray2 = myArray[1].split("TO`");
@@ -394,6 +404,7 @@ wss.on('connection', function connection(ws) {
     });
     //SAPPHIRE SERVER CODE
     if (data.search("ROOMID`SAPPHIRE`") != -1 && data.search("SEND-PING") != -1) {
+      got_command = true
       let myArray = data.split("FROM`");
       let myArray2 = myArray[1].split("TO`");
       var sapphire_players = sapphire_players_names.indexOf(myArray2[0].replace('`', ''))
@@ -402,6 +413,7 @@ wss.on('connection', function connection(ws) {
       }
     }
     if (data.search("ROOMID`SAPPHIRE`") != -1 && data.search("SEND-HOST-CHECKALLROOMS") != -1) {
+      got_command = true
       let myArray = data.split("FROM`");
       let myArray2 = myArray[1].split("TO`");
       let newarray = 'FROM`HOST`TO`' + myArray2[0].replace('`', '') + '`ROOMID`SAPPHIRE`SEND-ROOM-LOBBY-EXISTS`Message`'
@@ -413,9 +425,11 @@ wss.on('connection', function connection(ws) {
       ws.send(newarray);
     }
     if (data.search("ROOMID`SAPPHIRE`") != -1 && data.search("SEND-HOST-RELAYCHATBOXTEXT") != -1) {
+      got_command = true
       get_message_sent = "SAPPHIRE_HOSTRELAYCHATBOXTEXT"
     }
     if (data.search("ROOMID`SAPPHIRE`") != -1 && data.search("SEND-HOST-LEAVE") != -1) {
+      got_command = true
       let myArray = data.split("FROM`");
       let myArray2 = myArray[1].split("TO`");
       console.log(myArray2[0].replace('`', '') + " left the SAPPHIRE server.");
@@ -423,6 +437,7 @@ wss.on('connection', function connection(ws) {
       sapphire_players_names.splice(sapphire_players, 1)
     }
     if (data.search("ROOMID`SAPPHIRE`") != -1 && data.search("SEND-HOST-NEEDALLBINGONUMBERS") != -1) {
+      got_command = true
       //console.log('FROM`My`TO`HOST`ROOMID`SAPPHIRE`SEND-ROOM-LOBBY-EXISTS`Message`')
       let myArray = data.split("FROM`");
       let myArray2 = myArray[1].split("TO`");
@@ -431,11 +446,13 @@ wss.on('connection', function connection(ws) {
       ws.send(newarray);
     }
     if (data.search("ROOMID`SAPPHIRE`") != -1 && data.search("SEND-HOST-PLAYERBINGO") != -1) {
+      got_command = true
       get_message_sent = "SAPPHIRE_PLAYERBINGO"
     }
     wss.clients.forEach(function each(client) {
       if (client.readyState === WebSocket.OPEN) {
         if (get_message_sent == "SAPPHIRE_HOSTRELAYCHATBOXTEXT") {
+          got_command = true
           //console.log('FROM`My`TO`HOST`ROOMID`SAPPHIRE`SEND-ROOM-LOBBY-EXISTS`Message`')
           let myArray = data.split("FROM`");
           let myArray2 = myArray[1].split("TO`");
@@ -444,6 +461,7 @@ wss.on('connection', function connection(ws) {
           client.send(newarray);
         }
         if (get_message_sent == "SAPPHIRE_PLAYERBINGO") {
+          got_command = true
           //console.log('FROM`My`TO`HOST`ROOMID`SAPPHIRE`SEND-ROOM-LOBBY-EXISTS`Message`')
           let myArray = data.split("FROM`");
           let myArray2 = myArray[1].split("TO`");
@@ -459,6 +477,7 @@ wss.on('connection', function connection(ws) {
     });
     //RUBY SERVER CODE
     if (data.search("ROOMID`RUBY`") != -1 && data.search("SEND-PING") != -1) {
+      got_command = true
       let myArray = data.split("FROM`");
       let myArray2 = myArray[1].split("TO`");
       var ruby_players = ruby_players_names.indexOf(myArray2[0].replace('`', ''))
@@ -467,6 +486,7 @@ wss.on('connection', function connection(ws) {
       }
     }
     if (data.search("ROOMID`RUBY`") != -1 && data.search("SEND-HOST-CHECKALLROOMS") != -1) {
+      got_command = true
       let myArray = data.split("FROM`");
       let myArray2 = myArray[1].split("TO`");
       let newarray = 'FROM`HOST`TO`' + myArray2[0].replace('`', '') + '`ROOMID`RUBY`SEND-ROOM-LOBBY-EXISTS`Message`'
@@ -478,9 +498,11 @@ wss.on('connection', function connection(ws) {
       ws.send(newarray);
     }
     if (data.search("ROOMID`RUBY`") != -1 && data.search("SEND-HOST-RELAYCHATBOXTEXT") != -1) {
+      got_command = true
       get_message_sent = "RUBY_HOSTRELAYCHATBOXTEXT"
     }
     if (data.search("ROOMID`RUBY`") != -1 && data.search("SEND-HOST-LEAVE") != -1) {
+      got_command = true
       let myArray = data.split("FROM`");
       let myArray2 = myArray[1].split("TO`");
       console.log(myArray2[0].replace('`', '') + " left the RUBY server.");
@@ -488,6 +510,7 @@ wss.on('connection', function connection(ws) {
       ruby_players_names.splice(ruby_players, 1)
     }
     if (data.search("ROOMID`RUBY`") != -1 && data.search("SEND-HOST-NEEDALLBINGONUMBERS") != -1) {
+      got_command = true
       //console.log('FROM`My`TO`HOST`ROOMID`RUBY`SEND-ROOM-LOBBY-EXISTS`Message`')
       let myArray = data.split("FROM`");
       let myArray2 = myArray[1].split("TO`");
@@ -496,11 +519,13 @@ wss.on('connection', function connection(ws) {
       ws.send(newarray);
     }
     if (data.search("ROOMID`RUBY`") != -1 && data.search("SEND-HOST-PLAYERBINGO") != -1) {
+      got_command = true
       get_message_sent = "RUBY_PLAYERBINGO"
     }
     wss.clients.forEach(function each(client) {
       if (client.readyState === WebSocket.OPEN) {
         if (get_message_sent == "RUBY_HOSTRELAYCHATBOXTEXT") {
+          got_command = true
           //console.log('FROM`My`TO`HOST`ROOMID`RUBY`SEND-ROOM-LOBBY-EXISTS`Message`')
           let myArray = data.split("FROM`");
           let myArray2 = myArray[1].split("TO`");
@@ -509,6 +534,7 @@ wss.on('connection', function connection(ws) {
           client.send(newarray);
         }
         if (get_message_sent == "RUBY_PLAYERBINGO") {
+          got_command = true
           //console.log('FROM`My`TO`HOST`ROOMID`RUBY`SEND-ROOM-LOBBY-EXISTS`Message`')
           let myArray = data.split("FROM`");
           let myArray2 = myArray[1].split("TO`");
@@ -524,6 +550,9 @@ wss.on('connection', function connection(ws) {
         }
       }
     });
+    if(!got_command){
+      wss.clients.forEach(client => client.send(data));
+    }
     console.log(data);
   });
 });
