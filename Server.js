@@ -17,7 +17,7 @@ var emerald_bingo_numbers_called = [];
 var emerald_game_has_started = 0
 var emerald_game_has_ended = 0
 var emerald_player_has_bingo = 0
-var emerald_current_bingo_line = '1 Line'
+var emerald_current_bingo_line = '1'
 var emerald_number_of_balls = '90'
 var emerald_game_type = 'SLOW BINGO'
 var emerald_time_between_calls = 5.5 //(seconds)
@@ -34,7 +34,7 @@ var sapphire_bingo_numbers_called = [];
 var sapphire_game_has_started = 0
 var sapphire_game_has_ended = 0
 var sapphire_player_has_bingo = 0
-var sapphire_current_bingo_line = '1 Line'
+var sapphire_current_bingo_line = '1'
 var sapphire_number_of_balls = '90'
 var sapphire_game_type = 'NORMAL BINGO'
 var sapphire_time_between_calls = 4.5 //(seconds)
@@ -51,7 +51,7 @@ var ruby_bingo_numbers_called = [];
 var ruby_game_has_started = 0
 var ruby_game_has_ended = 0
 var ruby_player_has_bingo = 0
-var ruby_current_bingo_line = '1 Line'
+var ruby_current_bingo_line = '1'
 var ruby_number_of_balls = '90'
 var ruby_game_type = 'FAST BINGO'
 var ruby_time_between_calls = 3.5 //(seconds)
@@ -126,17 +126,17 @@ setTimeout(function() {
     if (emerald_bingo_numbers.length >= 1 && emerald_pause_calling == 0 && emerald_game_has_ended == 0) {
       if (emerald_player_has_bingo == 1) {
         emerald_player_has_bingo = 0
-        if (emerald_current_bingo_line == "1 Line") {
-          emerald_current_bingo_line = "2 Lines"
+        if (emerald_current_bingo_line == "1") {
+          emerald_current_bingo_line = "2"
           let newarray2 = 'FROM`HOST`TO`ALL`ROOMID`EMERALD`SEND-CLIENT-SETTINGS`Message`' + 'HOWMANYNUMBERS:' + emerald_number_of_balls + ':' + 'CURRENTPLAY:' + emerald_current_bingo_line + ':'
           wss.clients.forEach(client => client.send(newarray2));
         }
-        else if (emerald_current_bingo_line == "2 Lines") {
-          emerald_current_bingo_line = "Full House"
+        else if (emerald_current_bingo_line == "2") {
+          emerald_current_bingo_line = "F"
           let newarray2 = 'FROM`HOST`TO`ALL`ROOMID`EMERALD`SEND-CLIENT-SETTINGS`Message`' + 'HOWMANYNUMBERS:' + emerald_number_of_balls + ':' + 'CURRENTPLAY:' + emerald_current_bingo_line + ':'
           wss.clients.forEach(client => client.send(newarray2));
         }
-        else if (emerald_current_bingo_line == "Full House") {
+        else if (emerald_current_bingo_line == "F") {
           emerald_bingo_numbers = [];
           emerald_bingo_numbers_called = [];
         }
@@ -168,8 +168,8 @@ setTimeout(function() {
         emerald_game_has_ended = 0
         emerald_game_has_started = 1
         emerald_timer = emerald_time_between_calls * parseInt(emerald_number_of_balls)
-        if (emerald_current_bingo_line != "1 Line") {
-          emerald_current_bingo_line = "1 Line"
+        if (emerald_current_bingo_line != "1") {
+          emerald_current_bingo_line = "1"
           let newarray2 = 'FROM`HOST`TO`ALL`ROOMID`EMERALD`SEND-CLIENT-SETTINGS`Message`' + 'HOWMANYNUMBERS:' + emerald_number_of_balls + ':' + 'CURRENTPLAY:' + emerald_current_bingo_line + ':'
           wss.clients.forEach(client => client.send(newarray2));
         }
@@ -185,17 +185,17 @@ setTimeout(function() {
     if (sapphire_bingo_numbers.length >= 1 && sapphire_pause_calling == 0 && sapphire_game_has_ended == 0) {
       if (sapphire_player_has_bingo == 1) {
         sapphire_player_has_bingo = 0
-        if (sapphire_current_bingo_line == "1 Line") {
-          sapphire_current_bingo_line = "2 Lines"
+        if (sapphire_current_bingo_line == "1") {
+          sapphire_current_bingo_line = "2"
           let newarray2 = 'FROM`HOST`TO`ALL`ROOMID`SAPPHIRE`SEND-CLIENT-SETTINGS`Message`' + 'HOWMANYNUMBERS:' + sapphire_number_of_balls + ':' + 'CURRENTPLAY:' + sapphire_current_bingo_line + ':'
           wss.clients.forEach(client => client.send(newarray2));
         }
-        else if (sapphire_current_bingo_line == "2 Lines") {
-          sapphire_current_bingo_line = "Full House"
+        else if (sapphire_current_bingo_line == "2") {
+          sapphire_current_bingo_line = "F"
           let newarray2 = 'FROM`HOST`TO`ALL`ROOMID`SAPPHIRE`SEND-CLIENT-SETTINGS`Message`' + 'HOWMANYNUMBERS:' + sapphire_number_of_balls + ':' + 'CURRENTPLAY:' + sapphire_current_bingo_line + ':'
           wss.clients.forEach(client => client.send(newarray2));
         }
-        else if (sapphire_current_bingo_line == "Full House") {
+        else if (sapphire_current_bingo_line == "F") {
           sapphire_bingo_numbers = [];
           sapphire_bingo_numbers_called = [];
         }
@@ -227,8 +227,8 @@ setTimeout(function() {
         sapphire_game_has_ended = 0
         sapphire_game_has_started = 1
         sapphire_timer = sapphire_time_between_calls * parseInt(emerald_number_of_balls)
-        if (sapphire_current_bingo_line != "1 Line") {
-          sapphire_current_bingo_line = "1 Line"
+        if (sapphire_current_bingo_line != "1") {
+          sapphire_current_bingo_line = "1"
           let newarray2 = 'FROM`HOST`TO`ALL`ROOMID`SAPPHIRE`SEND-CLIENT-SETTINGS`Message`' + 'HOWMANYNUMBERS:' + sapphire_number_of_balls + ':' + 'CURRENTPLAY:' + sapphire_current_bingo_line + ':'
           wss.clients.forEach(client => client.send(newarray2));
         }
@@ -244,17 +244,17 @@ setTimeout(function() {
     if (ruby_bingo_numbers.length >= 1 && ruby_pause_calling == 0 && ruby_game_has_ended == 0) {
       if (ruby_player_has_bingo == 1) {
         ruby_player_has_bingo = 0
-        if (ruby_current_bingo_line == "1 Line") {
-          ruby_current_bingo_line = "2 Lines"
+        if (ruby_current_bingo_line == "1") {
+          ruby_current_bingo_line = "2"
           let newarray2 = 'FROM`HOST`TO`ALL`ROOMID`RUBY`SEND-CLIENT-SETTINGS`Message`' + 'HOWMANYNUMBERS:' + ruby_number_of_balls + ':' + 'CURRENTPLAY:' + ruby_current_bingo_line + ':'
           wss.clients.forEach(client => client.send(newarray2));
         }
-        else if (ruby_current_bingo_line == "2 Lines") {
-          ruby_current_bingo_line = "Full House"
+        else if (ruby_current_bingo_line == "2") {
+          ruby_current_bingo_line = "F"
           let newarray2 = 'FROM`HOST`TO`ALL`ROOMID`RUBY`SEND-CLIENT-SETTINGS`Message`' + 'HOWMANYNUMBERS:' + ruby_number_of_balls + ':' + 'CURRENTPLAY:' + ruby_current_bingo_line + ':'
           wss.clients.forEach(client => client.send(newarray2));
         }
-        else if (ruby_current_bingo_line == "Full House") {
+        else if (ruby_current_bingo_line == "F") {
           ruby_bingo_numbers = [];
           ruby_bingo_numbers_called = [];
         }
@@ -286,8 +286,8 @@ setTimeout(function() {
         ruby_game_has_ended = 0
         ruby_game_has_started = 1
         ruby_timer = ruby_time_between_calls * parseInt(emerald_number_of_balls)
-        if (ruby_current_bingo_line != "1 Line") {
-          ruby_current_bingo_line = "1 Line"
+        if (ruby_current_bingo_line != "1") {
+          ruby_current_bingo_line = "1"
           let newarray2 = 'FROM`HOST`TO`ALL`ROOMID`RUBY`SEND-CLIENT-SETTINGS`Message`' + 'HOWMANYNUMBERS:' + ruby_number_of_balls + ':' + 'CURRENTPLAY:' + ruby_current_bingo_line + ':'
           wss.clients.forEach(client => client.send(newarray2));
         }
@@ -340,17 +340,17 @@ wss.on('connection', function connection(ws) {
       emerald_game_has_started = 0
       emerald_game_has_ended = 1
       emerald_player_has_bingo = 0
-      emerald_current_bingo_line = '1 Line'
+      emerald_current_bingo_line = '1'
       emerald_timer = 60 //(seconds)
       sapphire_game_has_started = 0
       sapphire_game_has_ended = 1
       sapphire_player_has_bingo = 0
-      sapphire_current_bingo_line = '1 Line'
+      sapphire_current_bingo_line = '1'
       sapphire_timer = 120 //(seconds)
       ruby_game_has_started = 0
       ruby_game_has_ended = 1
       ruby_player_has_bingo = 0
-      ruby_current_bingo_line = '1 Line'
+      ruby_current_bingo_line = '1'
       ruby_timer = 30 //(seconds)
       emerald_players_names = [];
       sapphire_players_names = [];
