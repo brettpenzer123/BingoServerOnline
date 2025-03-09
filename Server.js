@@ -338,17 +338,17 @@ wss.on('connection', function connection(ws) {
       shuffle(sapphire_bingo_numbers);
       shuffle(ruby_bingo_numbers);
       emerald_game_has_started = 0
-      emerald_game_has_ended = 0
+      emerald_game_has_ended = 1
       emerald_player_has_bingo = 0
       emerald_current_bingo_line = '1 Line'
       emerald_timer = 60 //(seconds)
       sapphire_game_has_started = 0
-      sapphire_game_has_ended = 0
+      sapphire_game_has_ended = 1
       sapphire_player_has_bingo = 0
       sapphire_current_bingo_line = '1 Line'
       sapphire_timer = 120 //(seconds)
       ruby_game_has_started = 0
-      ruby_game_has_ended = 0
+      ruby_game_has_ended = 1
       ruby_player_has_bingo = 0
       ruby_current_bingo_line = '1 Line'
       ruby_timer = 30 //(seconds)
