@@ -317,6 +317,46 @@ wss.on('connection', function connection(ws) {
     var get_message_sent = ""
     var got_command = false
     //MAIN SERVER CODE
+    if (data.search("MASTER_RESET") != -1) {
+      got_command = true
+      emerald_bingo_numbers = [];
+      emerald_bingo_numbers_called = [];
+      sapphire_bingo_numbers = [];
+      sapphire_bingo_numbers_called = [];
+      ruby_bingo_numbers = [];
+      ruby_bingo_numbers_called = [];
+      for (let i = 0; i < parseInt(emerald_number_of_balls); i++) {
+        emerald_bingo_numbers.push(i + 1);
+      }
+      for (let i = 0; i < parseInt(sapphire_number_of_balls); i++) {
+        sapphire_bingo_numbers.push(i + 1);
+      }
+      for (let i = 0; i < parseInt(ruby_number_of_balls); i++) {
+        ruby_bingo_numbers.push(i + 1);
+      }
+      shuffle(emerald_bingo_numbers);
+      shuffle(sapphire_bingo_numbers);
+      shuffle(ruby_bingo_numbers);
+      emerald_game_has_started = 0
+      emerald_game_has_ended = 0
+      emerald_player_has_bingo = 0
+      emerald_current_bingo_line = '1 Line'
+      emerald_timer = 60 //(seconds)
+      sapphire_game_has_started = 0
+      sapphire_game_has_ended = 0
+      sapphire_player_has_bingo = 0
+      sapphire_current_bingo_line = '1 Line'
+      sapphire_timer = 120 //(seconds)
+      ruby_game_has_started = 0
+      ruby_game_has_ended = 0
+      ruby_player_has_bingo = 0
+      ruby_current_bingo_line = '1 Line'
+      ruby_timer = 30 //(seconds)
+      emerald_players_names = [];
+      sapphire_players_names = [];
+      ruby_players_names = [];
+      console.log("MASTER RESET")
+    }
     if (data.search("ROOMID`SERVER`") != -1 && data.search("SEND-HOST-GETINFORMATION") != -1) {
       got_command = true
       let myArray = data.split("FROM`");
