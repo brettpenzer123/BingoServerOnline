@@ -25,7 +25,7 @@ var emerald_time_between_rounds = 30 //(seconds)
 var emerald_time_between_bingos = 10 //(seconds)
 var emerald_initial_pause = 60 //(seconds)
 var emerald_timer = 60 //(seconds)
-var emerald_debug = true
+var emerald_debug = false
 
 //SAPPHIRE BINGO VARS
 var sapphire_pause_calling = 0
@@ -154,6 +154,7 @@ setTimeout(function() {
       emerald_game_has_ended = 1
       emerald_game_has_started = 0
       emerald_players_names = []
+      emerald_bingo_numbers_called = [];
       if(emerald_debug){
         console.log("EMERALD server restarted")
       }
@@ -213,6 +214,7 @@ setTimeout(function() {
       sapphire_game_has_ended = 1
       sapphire_game_has_started = 0
       sapphire_players_names = []
+      sapphire_bingo_numbers_called = [];
       if(sapphire_debug){
         console.log("SAPPHIRE server restarted")
       }
@@ -272,6 +274,7 @@ setTimeout(function() {
       ruby_game_has_ended = 1
       ruby_game_has_started = 0
       ruby_players_names = []
+      ruby_bingo_numbers_called = [];
       if(ruby_debug){
         console.log("RUBY server restarted")
       }
